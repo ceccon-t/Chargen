@@ -32,8 +32,4 @@ public class Chat {
         messages.add(new Message(role, content));
     }
 
-    public void loadConversationState(Chat otherChat) {
-        this.messages = new ArrayList<>();
-        otherChat.getMessages().forEach(m -> this.messages.add(m));
-    }
 }
