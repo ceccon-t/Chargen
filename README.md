@@ -14,12 +14,12 @@ Type in the information about your character on the top left form. After that, c
 
 If you like the result, click on the "Save character" button at the bottom to save the generated content to disk. A folder will be created with the date and name of the character, containing a JPEG image for the avatar and a plain text file for the biography with all the information of the character.
 
-![Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye](https://raw.githubusercontent.com/ceccon-t/Chargen/main/images/Chargen_v1-0-0_sc0.png "Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye")
+![Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye](https://raw.githubusercontent.com/ceccon-t/Chargen/main/images/Chargen_v1-0-0_sc1.png "Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye")
 
 
 ## Dependencies
 
-The application assumes you have an OpenAI-compatible LLM server listening on port 8080 of your computer and a Stable Diffusion image generation model server listening on port 7860. If you have experience configuring and running them, feel free to use your favorite - if you do not have experience, the easiest way to get the LLM part running is to use [llamafile](https://github.com/mozilla-Ocho/llamafile), while for the Stable Diffusion model the classic solution is [text-generation-webui](https://github.com/oobabooga/text-generation-webui). Both of these will already start the servers listening to the expected ports by default.
+The application assumes you have an OpenAI-compatible LLM server listening on port 8080 of your computer and a Stable Diffusion image generation model server listening on port 7860. If you have experience configuring and running them, feel free to use your favorite ones - if you do not have experience, the easiest way to get the LLM part running is to use [llamafile](https://github.com/mozilla-Ocho/llamafile), while for the Stable Diffusion model the classic solution is [text-generation-webui](https://github.com/oobabooga/text-generation-webui). Both of these will already start the servers listening on the expected ports by default.
 
 Don't like the results you have been getting? Just try different models!
 
