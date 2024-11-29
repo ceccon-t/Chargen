@@ -333,8 +333,6 @@ public class MainView extends JFrame {
             revalidate();
             repaint();
 
-            saveGeneratedImage(LocalDateTime.now().toString() + ".jpg", imageData);
-
         } catch (IOException e) {
             System.out.println("Error when GENERATING image");
             throw new RuntimeException(e);
