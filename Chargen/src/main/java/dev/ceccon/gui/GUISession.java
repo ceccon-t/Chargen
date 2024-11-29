@@ -32,7 +32,6 @@ public class GUISession {
                 "user",
                 textDescription(userCharacter) + "\n\nWrite a suitable short biography for this character."
         );
-        printLastChatMessageToCLI();
 
         LLMResponseDTO response = LLMClient.sendPrompt(
                 "http://localhost:8080/v1/chat/completions",
@@ -42,8 +41,6 @@ public class GUISession {
                 response.getChoices().get(0).message().role(),
                 response.getChoices().get(0).message().content()
         );
-        printLastChatMessageToCLI();
-        printUsageMetrics(response);
 
         return response.getChoices().get(0).message().content();
     }
@@ -67,12 +64,6 @@ public class GUISession {
         sb.append("Charisma: "); sb.append(c.getCharisma()); sb.append("\n");
 
         return sb.toString();
-    }
-
-    private void printInstructions() {
-        System.out.println("==================================");
-        System.out.println("Welcome to Character Bio Generator");
-        System.out.println("==================================");
     }
 
     private void printLastChatMessageToCLI() {
