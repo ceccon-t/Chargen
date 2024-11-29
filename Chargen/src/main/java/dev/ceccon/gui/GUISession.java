@@ -2,6 +2,7 @@ package dev.ceccon.gui;
 
 import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.client.LLMClient;
+import dev.ceccon.client.LLMSanitizer;
 import dev.ceccon.conversation.Chat;
 import dev.ceccon.conversation.Message;
 import dev.ceccon.dtos.LLMPromptDTO;
@@ -28,9 +29,10 @@ public class GUISession {
                         Do not output any disclaimer or explanation, just the biography for the character.
                         """
         );
+        String messageContent = textDescription(userCharacter) + "\n\nWrite a suitable short biography for this character.";
         chat.addMessage(
                 "user",
-                textDescription(userCharacter) + "\n\nWrite a suitable short biography for this character."
+                LLMSanitizer.sanitizeForChat(messageContent)
         );
 
         LLMResponseDTO response = LLMClient.sendPrompt(
@@ -42,7 +44,7 @@ public class GUISession {
                 response.getChoices().get(0).message().content()
         );
 
-        return response.getChoices().get(0).message().content();
+        return LLMSanitizer.sanitizeLLMSpecialTokens(response.getChoices().get(0).message().content());
     }
 
 

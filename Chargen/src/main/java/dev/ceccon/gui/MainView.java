@@ -168,7 +168,6 @@ public class MainView extends JFrame {
 
         JPanel infosPanel = new JPanel();
         infosPanel.setLayout(new BoxLayout(infosPanel, BoxLayout.Y_AXIS));
-        infosPanel.add(clearButton);
         infosPanel.add(pnName);
         infosPanel.add(pnRace);
         infosPanel.add(pnSex);
@@ -182,6 +181,7 @@ public class MainView extends JFrame {
         infosPanel.add(pnCharisma);
 //        infosPanel.add(spBio);
 //        infosPanel.add(stateInfo);
+        infosPanel.add(clearButton);
 
         ImageIcon icon = new ImageIcon("image.jpg");
         Image image = icon.getImage();
@@ -212,7 +212,7 @@ public class MainView extends JFrame {
         mainPanel.add(topPanel);
         mainPanel.add(spBio);
         mainPanel.add(generateBioButton);
-        mainPanel.add(stateInfo);
+        //mainPanel.add(stateInfo);
 
         JButton saveCharacterButton = new JButton("Save character");
         saveCharacterButton.addActionListener(e -> {
