@@ -2,6 +2,8 @@ package dev.ceccon.gui;
 
 import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.client.SDClient;
+import dev.ceccon.config.AppConfig;
+import dev.ceccon.config.SDAPIConfig;
 import dev.ceccon.dtos.SDPromptDTO;
 import dev.ceccon.dtos.SDResponseDTO;
 
@@ -19,6 +21,8 @@ import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
 public class MainView extends JFrame {
+
+    private AppConfig appConfig;
 
     private JLabel lName;
     private JTextField tfName;
@@ -57,13 +61,16 @@ public class MainView extends JFrame {
 
     private GUISession session;
 
-    public MainView() {
+    public MainView(AppConfig appConfig) {
         super("CHARGEN");
+
+        this.appConfig = appConfig;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(960, 960);
         setLayout(new BorderLayout());
 
-        session = new GUISession();
+        session = new GUISession(appConfig);
 
         buildView();
 
@@ -115,6 +122,7 @@ public class MainView extends JFrame {
                     try {
                         getCharBio();
                     } catch (IOException ex) {
+                        System.out.println("Error when generation bio...");
                         throw new RuntimeException(ex);
                     }
                 });
@@ -268,7 +276,8 @@ public class MainView extends JFrame {
     }
 
     private void getCharacterPicture() {
-        String url = "http://localhost:7860/sdapi/v1/txt2img";
+        SDAPIConfig sdapiConfig = appConfig.getSdApiConfig();
+        String url = sdapiConfig.getFullUrl();
 
         String basePrompt = "character portrait, dark fantasy, CHAR_DESCRIPTION_PROMPT natural lighting, high detail, 8K";
 

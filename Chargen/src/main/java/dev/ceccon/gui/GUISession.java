@@ -3,6 +3,8 @@ package dev.ceccon.gui;
 import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.client.LLMClient;
 import dev.ceccon.client.LLMSanitizer;
+import dev.ceccon.config.AppConfig;
+import dev.ceccon.config.LLMAPIConfig;
 import dev.ceccon.conversation.Chat;
 import dev.ceccon.conversation.Message;
 import dev.ceccon.dtos.LLMPromptDTO;
@@ -12,10 +14,12 @@ import java.io.IOException;
 
 public class GUISession {
 
+    private AppConfig appConfig;
     private Chat chat;
 
-    public GUISession() {
+    public GUISession(AppConfig appConfig) {
         chat = new Chat();
+        this.appConfig = appConfig;
     }
 
     public String createBio(FantasyCharacter userCharacter) throws IOException {
@@ -35,8 +39,10 @@ public class GUISession {
                 LLMSanitizer.sanitizeForChat(messageContent)
         );
 
+        LLMAPIConfig llmapiConfig = appConfig.getLlmApiConfig();
+
         LLMResponseDTO response = LLMClient.sendPrompt(
-                "http://localhost:8080/v1/chat/completions",
+                llmapiConfig.getFullUrl(),
                 LLMPromptDTO.forChat(chat)
         );
         chat.addMessage(
