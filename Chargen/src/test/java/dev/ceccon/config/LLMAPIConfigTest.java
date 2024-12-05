@@ -54,4 +54,16 @@ class LLMAPIConfigTest {
         assertEquals(model, modelOnConfig);
     }
 
+    @Test
+    void getAndSetTemperature() {
+        double temperature = 0.9;
+
+        LLMAPIConfig config = new LLMAPIConfig();
+        config.setTemperature(temperature);
+
+        double temperatureOnConfig = config.getTemperature();
+
+        assertEquals(temperature, temperatureOnConfig);
+    }
+
 }

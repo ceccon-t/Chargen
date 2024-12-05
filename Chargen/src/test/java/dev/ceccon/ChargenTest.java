@@ -101,4 +101,58 @@ class ChargenTest {
 
         assertEquals(model, modelOnLLMApiConfig);
     }
+
+    @Test
+    void cliOptionLanguageTemperatureWithoutValueThrowsException() {
+        String[] args = new String[]{"-lt"};
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Chargen.parseArguments(args, new AppConfig());
+        });
+    }
+
+    @Test
+    void cliOptionLanguageTemperatureWithNonNumericValueThrowsException() {
+        String temperature = "temperature";
+
+        String[] args = new String[]{"-lt", temperature};
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Chargen.parseArguments(args, new AppConfig());
+        });
+    }
+
+    @Test
+    void cliOptionLanguageTemperatureWithIntegerValueSetsTemperatureOnLLMApiConfig() {
+        String temperature = "1";
+
+        String[] args = new String[]{"-lt", temperature};
+
+        LLMAPIConfig llmapiConfig = new LLMAPIConfig();
+        AppConfig appConfig = new AppConfig();
+        appConfig.setLlmApiConfig(llmapiConfig);
+
+        Chargen.parseArguments(args, appConfig);
+
+        double temperatureOnLLMApiConfig = llmapiConfig.getTemperature();
+
+        assertEquals(Double.valueOf(temperature), temperatureOnLLMApiConfig);
+    }
+
+    @Test
+    void cliOptionLanguageTemperatureWithDecimalValueSetsTemperatureOnLLMApiConfig() {
+        String temperature = "0.9";
+
+        String[] args = new String[]{"-lt", temperature};
+
+        LLMAPIConfig llmapiConfig = new LLMAPIConfig();
+        AppConfig appConfig = new AppConfig();
+        appConfig.setLlmApiConfig(llmapiConfig);
+
+        Chargen.parseArguments(args, appConfig);
+
+        double temperatureOnLLMApiConfig = llmapiConfig.getTemperature();
+
+        assertEquals(Double.valueOf(temperature), temperatureOnLLMApiConfig);
+    }
 }

@@ -53,6 +53,11 @@ public class Chargen {
             llmapiConfig.setModel(model);
         }
 
+        if (chargenArgs.hasLlmTemperature()) {
+            double temperature = chargenArgs.getLlmTemperature();
+            llmapiConfig.setTemperature(temperature);
+        }
+
     }
 
     private static void printBanner() {
@@ -86,6 +91,14 @@ public class Chargen {
         )
         private String llmModel;
 
+        @Parameter(
+                names = {"-lt", "--llmtemperature"},
+                description = "Temperature to be used when generating text",
+                required = false,
+                arity = 1
+        )
+        private Double llmTemperature;
+
         public Integer getLlmPort() {
             return llmPort;
         }
@@ -108,6 +121,14 @@ public class Chargen {
 
         public boolean hasLlmModel() {
             return llmModel != null;
+        }
+
+        public Double getLlmTemperature() {
+            return llmTemperature;
+        }
+
+        public boolean hasLlmTemperature() {
+            return llmTemperature != null;
         }
     }
 
