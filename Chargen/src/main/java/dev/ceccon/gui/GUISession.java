@@ -43,7 +43,7 @@ public class GUISession {
 
         LLMResponseDTO response = LLMClient.sendPrompt(
                 llmapiConfig.getFullUrl(),
-                LLMPromptDTO.forChat(chat)
+                LLMPromptDTO.forChat(chat, llmapiConfig)
         );
         chat.addMessage(
                 response.getChoices().get(0).message().role(),

@@ -48,6 +48,11 @@ public class Chargen {
             sdapiConfig.setPort(sdPort.toString());
         }
 
+        if (chargenArgs.hasLlmModel()) {
+            String model = chargenArgs.getLlmModel();
+            llmapiConfig.setModel(model);
+        }
+
     }
 
     private static void printBanner() {
@@ -73,6 +78,14 @@ public class Chargen {
         )
         private Integer sdPort;
 
+        @Parameter(
+                names = {"-lm", "--llmmodel"},
+                description = "LLM model to be used (when available)",
+                required = false,
+                arity = 1
+        )
+        private String llmModel;
+
         public Integer getLlmPort() {
             return llmPort;
         }
@@ -87,6 +100,14 @@ public class Chargen {
 
         public boolean hasSdPort() {
             return sdPort != null;
+        }
+
+        public String getLlmModel() {
+            return llmModel;
+        }
+
+        public boolean hasLlmModel() {
+            return llmModel != null;
         }
     }
 

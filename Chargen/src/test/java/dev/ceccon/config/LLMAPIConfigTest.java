@@ -42,4 +42,16 @@ class LLMAPIConfigTest {
         assertEquals(port, portOnConfig);
     }
 
+    @Test
+    void getAndSetModel() {
+        String model = "llama3";
+
+        LLMAPIConfig config = new LLMAPIConfig();
+        config.setModel(model);
+
+        String modelOnConfig = config.getModel();
+
+        assertEquals(model, modelOnConfig);
+    }
+
 }

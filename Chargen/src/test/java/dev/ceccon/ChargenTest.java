@@ -76,4 +76,29 @@ class ChargenTest {
 
         assertEquals(port, portOnSDApiConfig);
     }
+
+    @Test
+    void cliOptionLanguageModelWithoutValueThrowsException() {
+        String[] args = new String[]{"-lm"};
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Chargen.parseArguments(args, new AppConfig());
+        });
+    }
+
+    @Test
+    void cliOptionLanguageModelWithValueSetsModelOnLLMApiConfig() {
+        String model = "llama3";
+        String[] args = new String[]{"-lm", model};
+
+        LLMAPIConfig llmapiConfig = new LLMAPIConfig();
+        AppConfig appConfig = new AppConfig();
+        appConfig.setLlmApiConfig(llmapiConfig);
+
+        Chargen.parseArguments(args, appConfig);
+
+        String modelOnLLMApiConfig = llmapiConfig.getModel();
+
+        assertEquals(model, modelOnLLMApiConfig);
+    }
 }

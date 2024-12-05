@@ -1,5 +1,6 @@
 package dev.ceccon.dtos;
 
+import dev.ceccon.config.LLMAPIConfig;
 import dev.ceccon.conversation.Chat;
 import dev.ceccon.conversation.Message;
 
@@ -16,12 +17,14 @@ public class LLMPromptDTO {
     private LLMPromptDTO() {
     }
 
-    public static LLMPromptDTO forChat(Chat chat) {
+    public static LLMPromptDTO forChat(Chat chat, LLMAPIConfig apiConfig) {
         LLMPromptDTO prompt = new LLMPromptDTO();
 
         for (Message message : chat.getMessages()) {
             prompt.messages.add(new MessageDTO(message.role(), message.content()));
         }
+
+        prompt.model = apiConfig.getModel();
 
         return prompt;
     }

@@ -6,6 +6,7 @@ public class LLMAPIConfig {
     private String host = "localhost";
     private String port = "8080";
     private String endpoint = "v1/chat/completions";
+    private String model = "";
 
     public String getFullUrl() {
         return protocol + "://" + host + ":" + port + "/" + endpoint;
@@ -17,5 +18,13 @@ public class LLMAPIConfig {
 
     public void setPort(String port) {
         this.port = port;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 }
