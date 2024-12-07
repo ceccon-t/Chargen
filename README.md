@@ -33,6 +33,26 @@ Command to run:
 
 If building the project with Maven, instead of `Chargen.jar` be sure to use the path to the generated jar, which will be in the `target` directory and have the version as a suffix.
 
+### Run with ollama
+
+If you are using ollama for the LLM server, you will have to at a minimum pass the name of the model you want to chat with when starting the application by using the `-lm <model_name>` option. You will probably also want to use ollama's default port, 11434. Here is an example of how to chat with llama3.1 using ollama (check ollama's documentation for other model options):
+
+`$ java -jar Chargen.jar -lp 11434 -lm llama3.1`
+
+## Command-line options
+
+Here is the list of command-line options available when starting the application:
+
+- `-lp <port_number>`: Set the port where to reach the LLM server, <port_number> must be an integer indicating a port in your machine with a LLM server listening. Defaults to 8080.
+
+- `-sp <port_number>`: Set the port where to reach the Stable Diffusion server, <port_number> must be an integer indicating a port in your machine with a Stable Diffusion server listening. Defaults to 7860.
+
+- `-lm <model_name>`: Specify the name of the LLM model to be used, <model_name> must be a string. Necessary when using ollama as backend for text generation, has no effect when using llamafile.
+
+- `-lt <temperature>`: Specify the temperature to be used when generating text, the larger the temperature the more randomness it includes. <temperature> must be a decimal number, and usually fits in the [0.0-1.0) range. Make sure to use a dot (`.`) and not a comma to separate the parts of the number. Defaults to 0.9.
+
+These options are independent of each other, and can be combined as desired and in any order. Examples of using some of them can be found in section "How to run" of readme.
+
 ## How to build the project
 
 This is a simple Maven project, so the easiest way to build it is running `mvn clean package` in the Chargen folder (assuming Maven is installed - if not, check its site and install from there). A jar file containing everything the application needs to run will be created at `Chargen/target/Chargen-<VERSION>.jar`.

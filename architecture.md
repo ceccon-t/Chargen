@@ -35,7 +35,11 @@ The script that defines the main workflow can be found under `.github/workflows/
 
 ## Libraries and Frameworks
 
+[JCommander](https://jcommander.org/) for parsing command line options.
+
 [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) as a build automation tool.
+
+[JUnit](https://junit.org/junit5/docs/current/user-guide/) and [Mockito](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html) for automated tests.
 
 [Swing](https://docs.oracle.com/javase/tutorial/uiswing/) as the GUI framework.
 

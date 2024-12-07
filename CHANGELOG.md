@@ -5,19 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - YYYY-MM-DD
+## [1.1.0] - 2024-12-06
 
 ### Added
 
-### Changed
-
-### Deprecated
-
-### Removed
+- JCommander library to parse command line options
+- CLI option to configure LLM server port
+- CLI option to configure Stable Diffusion server port
+- CLI option to configure LLM model to be used when available
+- CLI option to configure temperature used to generate text
 
 ### Fixed
 
-### Security
+- Log error when unable to generate biography
 
 
 ## [1.0.0] - 2024-11-29
