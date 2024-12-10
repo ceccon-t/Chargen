@@ -4,11 +4,8 @@ import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.client.LLMClient;
 import dev.ceccon.client.LLMSanitizer;
 import dev.ceccon.config.AppConfig;
-import dev.ceccon.config.LLMAPIConfig;
 import dev.ceccon.conversation.Chat;
 import dev.ceccon.conversation.Message;
-import dev.ceccon.dtos.LLMPromptDTO;
-import dev.ceccon.dtos.LLMResponseDTO;
 
 import java.io.IOException;
 
@@ -16,10 +13,12 @@ public class GUISession {
 
     private AppConfig appConfig;
     private Chat chat;
+    private LLMClient llmClient;
 
     public GUISession(AppConfig appConfig) {
         chat = new Chat();
         this.appConfig = appConfig;
+        this.llmClient = new LLMClient(appConfig.getLlmApiConfig());
     }
 
     public String createBio(FantasyCharacter userCharacter) throws IOException {
@@ -39,18 +38,13 @@ public class GUISession {
                 LLMSanitizer.sanitizeForChat(messageContent)
         );
 
-        LLMAPIConfig llmapiConfig = appConfig.getLlmApiConfig();
-
-        LLMResponseDTO response = LLMClient.sendPrompt(
-                llmapiConfig.getFullUrl(),
-                LLMPromptDTO.forChat(chat, llmapiConfig)
-        );
+        Message response = llmClient.sendPrompt(chat);
         chat.addMessage(
-                response.getChoices().get(0).message().role(),
-                response.getChoices().get(0).message().content()
+                response.role(),
+                response.content()
         );
 
-        return LLMSanitizer.sanitizeLLMSpecialTokens(response.getChoices().get(0).message().content());
+        return LLMSanitizer.sanitizeLLMSpecialTokens(response.content());
     }
 
 
@@ -82,16 +76,4 @@ public class GUISession {
         System.out.println(message.role() + ": " + message.content());
     }
 
-    private void printUsageMetrics(LLMResponseDTO responseDTO) {
-        StringBuilder builder = new StringBuilder();
-        LLMResponseDTO.UsageDTO usageDTO = responseDTO.getUsage();
-        System.out.println(builder.append("(Token usage metrics: [")
-                .append("Completion tokens: ").append(usageDTO.completion_tokens())
-                .append(", ")
-                .append("Prompt tokens: ").append(usageDTO.prompt_tokens())
-                .append(", ")
-                .append("Total tokens: ").append(usageDTO.total_tokens())
-                .append("])")
-        );
-    }
 }

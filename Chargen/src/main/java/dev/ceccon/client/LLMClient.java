@@ -1,6 +1,9 @@
 package dev.ceccon.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.ceccon.config.LLMAPIConfig;
+import dev.ceccon.conversation.Chat;
+import dev.ceccon.conversation.Message;
 import dev.ceccon.dtos.LLMPromptDTO;
 import dev.ceccon.dtos.LLMResponseDTO;
 
@@ -13,7 +16,16 @@ import java.net.URL;
 
 public class LLMClient {
 
-    public static LLMResponseDTO sendPrompt(String urlString, LLMPromptDTO promptDTO) throws IOException {
+    private LLMAPIConfig apiConfig;
+
+    public LLMClient(LLMAPIConfig apiConfig) {
+        this.apiConfig = apiConfig;
+    }
+
+    public Message sendPrompt(Chat chat) throws IOException {
+        String urlString = apiConfig.getFullUrl();
+        LLMPromptDTO promptDTO = LLMPromptDTO.forChat(chat, apiConfig);
+
         ObjectMapper mapper = new ObjectMapper();
 
         URL url = new URL(urlString);
@@ -44,7 +56,10 @@ public class LLMClient {
 
         connection.disconnect();
 
-        return mapper.readValue(rawResponse, LLMResponseDTO.class);
+        LLMResponseDTO responseDTO = mapper.readValue(rawResponse, LLMResponseDTO.class);
+
+        return new Message(responseDTO.getChoices().get(0).message().role(),
+                responseDTO.getChoices().get(0).message().content());
 
     }
 }
