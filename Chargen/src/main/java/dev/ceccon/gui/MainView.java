@@ -4,8 +4,8 @@ import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.client.SDClient;
 import dev.ceccon.config.AppConfig;
 import dev.ceccon.config.SDAPIConfig;
-import dev.ceccon.dtos.SDPromptDTO;
-import dev.ceccon.dtos.SDResponseDTO;
+import dev.ceccon.client.dtos.SDPromptDTO;
+import dev.ceccon.client.dtos.SDResponseDTO;
 
 import javax.swing.*;
 import java.awt.*;

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.ceccon.config.LLMAPIConfig;
 import dev.ceccon.conversation.Chat;
 import dev.ceccon.conversation.Message;
-import dev.ceccon.dtos.LLMPromptDTO;
-import dev.ceccon.dtos.LLMResponseDTO;
+import dev.ceccon.client.dtos.LLMPromptDTO;
+import dev.ceccon.client.dtos.LLMResponseDTO;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

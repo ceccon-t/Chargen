@@ -1,8 +1,8 @@
 package dev.ceccon.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.ceccon.dtos.SDPromptDTO;
-import dev.ceccon.dtos.SDResponseDTO;
+import dev.ceccon.client.dtos.SDPromptDTO;
+import dev.ceccon.client.dtos.SDResponseDTO;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

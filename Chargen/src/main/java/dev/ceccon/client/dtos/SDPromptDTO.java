@@ -1,4 +1,4 @@
-package dev.ceccon.dtos;
+package dev.ceccon.client.dtos;
 
 public class SDPromptDTO {
 
