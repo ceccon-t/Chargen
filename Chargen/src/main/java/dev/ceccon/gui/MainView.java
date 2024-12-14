@@ -265,14 +265,21 @@ public class MainView extends JFrame {
     }
 
     public void getCharBio() throws IOException {
+        characterBio = "";
 
-        String bio = session.createBio(buildCharacter());
-        characterBio = bio;
+        session.createBio(buildCharacter(),
+                this::appendTokenToBio,
+                (end) -> wrapUpBioGeneration()
+        );
+    }
 
-        taBio.setText(bio);
+    private void appendTokenToBio(String token) {
+        characterBio += token;
+        taBio.setText(characterBio);
+    }
 
+    private void wrapUpBioGeneration() {
         stateInfo.setText("Done!");
-
     }
 
     private void getCharacterPicture() {

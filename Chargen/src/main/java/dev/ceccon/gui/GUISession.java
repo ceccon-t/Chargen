@@ -8,21 +8,20 @@ import dev.ceccon.conversation.Chat;
 import dev.ceccon.conversation.Message;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class GUISession {
 
     private AppConfig appConfig;
-    private Chat chat;
     private LLMClient llmClient;
 
     public GUISession(AppConfig appConfig) {
-        chat = new Chat();
         this.appConfig = appConfig;
         this.llmClient = new LLMClient(appConfig.getLlmApiConfig());
     }
 
-    public String createBio(FantasyCharacter userCharacter) throws IOException {
-        chat = new Chat();
+    public String createBio(FantasyCharacter userCharacter, Consumer<String> tokenConsumer, Consumer<Void> onFinish) throws IOException {
+        Chat chat = new Chat();
         chat.addMessage(
                 "system",
                 """
@@ -38,11 +37,7 @@ public class GUISession {
                 LLMSanitizer.sanitizeForChat(messageContent)
         );
 
-        Message response = llmClient.sendPrompt(chat);
-        chat.addMessage(
-                response.role(),
-                response.content()
-        );
+        Message response = llmClient.getBioStreaming(chat, tokenConsumer, onFinish);
 
         return LLMSanitizer.sanitizeLLMSpecialTokens(response.content());
     }
@@ -66,14 +61,6 @@ public class GUISession {
         sb.append("Charisma: "); sb.append(c.getCharisma()); sb.append("\n");
 
         return sb.toString();
-    }
-
-    private void printLastChatMessageToCLI() {
-        printMessageToCLI(chat.getMessages().getLast());
-    }
-
-    private void printMessageToCLI(Message message) {
-        System.out.println(message.role() + ": " + message.content());
     }
 
 }
