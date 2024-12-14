@@ -14,11 +14,12 @@ public class LLMPromptDTO {
     private String model = "";
     private List<MessageDTO> messages = new ArrayList<>();
     private double temperature = 0.0;
+    private boolean stream = false;
 
     private LLMPromptDTO() {
     }
 
-    public static LLMPromptDTO forChat(Chat chat, LLMAPIConfig apiConfig) {
+    public static LLMPromptDTO build(Chat chat, LLMAPIConfig apiConfig) {
         LLMPromptDTO prompt = new LLMPromptDTO();
 
         for (Message message : chat.getMessages()) {
@@ -41,5 +42,13 @@ public class LLMPromptDTO {
 
     public double getTemperature() {
         return temperature;
+    }
+
+    public boolean isStream() {
+        return stream;
+    }
+
+    public void setStream(boolean stream) {
+        this.stream = stream;
     }
 }
