@@ -22,6 +22,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class MainView extends JFrame {
 
+    private static final String TEXT_BUTTON_GENERATION_BIO_ENABLED = "Generate bio";
+    private static final String TEXT_BUTTON_GENERATION_BIO_DISABLED = "Please wait...";
+
     private AppConfig appConfig;
 
     private JLabel lName;
@@ -51,6 +54,7 @@ public class MainView extends JFrame {
     private ImageIcon scaledIcon;
     private JLabel imageLabel;
     private JButton generateImageButton;
+    private JButton generateBioButton;
 
     private JTextArea taBio;
 
@@ -113,7 +117,7 @@ public class MainView extends JFrame {
             clearAll();
         });
 
-        JButton generateBioButton = new JButton("Generate bio");
+        generateBioButton = new JButton(TEXT_BUTTON_GENERATION_BIO_ENABLED);
         generateBioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String characterName = tfName.getText();
@@ -266,6 +270,8 @@ public class MainView extends JFrame {
 
     public void getCharBio() throws IOException {
         characterBio = "";
+        generateBioButton.setEnabled(false);
+        generateBioButton.setText(TEXT_BUTTON_GENERATION_BIO_DISABLED);
 
         session.createBio(buildCharacter(),
                 this::appendTokenToBio,
@@ -279,6 +285,8 @@ public class MainView extends JFrame {
     }
 
     private void wrapUpBioGeneration() {
+        generateBioButton.setEnabled(true);
+        generateBioButton.setText(TEXT_BUTTON_GENERATION_BIO_ENABLED);
         stateInfo.setText("Done!");
     }
 

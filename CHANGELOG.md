@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Generate biography with streaming text
 
+- Block button for generation biography while generating
+
 ### Deprecated
 
 ### Removed
