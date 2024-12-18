@@ -24,6 +24,8 @@ public class MainView extends JFrame {
 
     private static final String TEXT_BUTTON_GENERATION_BIO_ENABLED = "Generate bio";
     private static final String TEXT_BUTTON_GENERATION_BIO_DISABLED = "Please wait...";
+    public static final String TEXT_BUTTON_GENERATION_IMAGE_ENABLED = "Generate image";
+    public static final String TEXT_BUTTON_GENERATION_IMAGE_DISABLED = "Please wait...";
 
     private AppConfig appConfig;
 
@@ -342,7 +344,7 @@ public class MainView extends JFrame {
         System.out.println("Prompt: " + prompt.getPrompt());
 
         try {
-            generateImageButton.setText("Generating...");
+            generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_DISABLED);
             revalidate();
             repaint();
 
@@ -353,7 +355,7 @@ public class MainView extends JFrame {
 
             imageLabel.setIcon(new ImageIcon(imageData));
 
-            generateImageButton.setText("Generate image");
+            generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_ENABLED);
             revalidate();
             repaint();
 
