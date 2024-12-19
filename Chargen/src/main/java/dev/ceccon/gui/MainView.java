@@ -343,24 +343,25 @@ public class MainView extends JFrame {
 
         System.out.println("Prompt: " + prompt.getPrompt());
 
-        try {
-            generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_DISABLED);
-            generateImageButton.setEnabled(false);
+        generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_DISABLED);
+        generateImageButton.setEnabled(false);
 
-            SDResponseDTO response = SDClient.sendPrompt(url, prompt);
+        new Thread(() -> {
+            SDResponseDTO response = null;
+            try {
+                response = SDClient.sendPrompt(url, prompt);
+                byte[] imageData = Base64.getDecoder().decode(response.getImages().get(0));
+                characterPicture = imageData;
 
-            byte[] imageData = Base64.getDecoder().decode(response.getImages().get(0));
-            characterPicture = imageData;
+                imageLabel.setIcon(new ImageIcon(imageData));
 
-            imageLabel.setIcon(new ImageIcon(imageData));
+            } catch (IOException e) {
+                System.out.println("Error when GENERATING image");
+            }
 
             generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_ENABLED);
             generateImageButton.setEnabled(true);
-
-        } catch (IOException e) {
-            System.out.println("Error when GENERATING image");
-            throw new RuntimeException(e);
-        }
+        }).start();
     }
 
     private void saveGeneratedImage(String outputFileName, byte[] imageData) {
