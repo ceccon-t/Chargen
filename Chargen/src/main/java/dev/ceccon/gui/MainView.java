@@ -345,8 +345,7 @@ public class MainView extends JFrame {
 
         try {
             generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_DISABLED);
-            revalidate();
-            repaint();
+            generateImageButton.setEnabled(false);
 
             SDResponseDTO response = SDClient.sendPrompt(url, prompt);
 
@@ -356,8 +355,7 @@ public class MainView extends JFrame {
             imageLabel.setIcon(new ImageIcon(imageData));
 
             generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_ENABLED);
-            revalidate();
-            repaint();
+            generateImageButton.setEnabled(true);
 
         } catch (IOException e) {
             System.out.println("Error when GENERATING image");
