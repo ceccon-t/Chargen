@@ -271,14 +271,34 @@ public class MainView extends JFrame {
     }
 
     public void getCharBio() throws IOException {
+        FantasyCharacter character;
+        try {
+            character = buildCharacter();
+        } catch (Exception e) {
+            showCharacterIncompleteErrorPopup();
+            return;
+        }
+
+        if (!character.isValid()) {
+            showCharacterIncompleteErrorPopup();
+            return;
+        }
+
         characterBio = "";
         generateBioButton.setEnabled(false);
         generateBioButton.setText(TEXT_BUTTON_GENERATION_BIO_DISABLED);
 
-        session.createBio(buildCharacter(),
+        session.createBio(character,
                 this::appendTokenToBio,
                 (end) -> wrapUpBioGeneration()
         );
+    }
+
+    private void showCharacterIncompleteErrorPopup() {
+        JOptionPane.showMessageDialog(null,
+                "Please fill all character infos.",
+                "INCOMPLETE CHARACTER",
+                JOptionPane.ERROR_MESSAGE);
     }
 
     private void appendTokenToBio(String token) {
