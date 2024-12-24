@@ -12,8 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Generate biography with streaming text
-
-- Block button for generation biography while generating
+- Block button for generating biography while generating
+- Block button for generating avatar while generating
+- Block generating biography if character infos have not been entirely filled
+- Block generating avatar if character infos have not been entirely filled
+- Block saving character if not generated neither biography nor avatar yet
 
 ### Deprecated
 
