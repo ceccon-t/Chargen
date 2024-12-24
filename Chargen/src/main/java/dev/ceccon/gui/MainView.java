@@ -62,6 +62,7 @@ public class MainView extends JFrame {
 
     private JLabel stateInfo;
 
+    FantasyCharacter currentCharacter = new FantasyCharacter();
     byte[] characterPicture = {};
     String characterBio = "";
 
@@ -283,6 +284,7 @@ public class MainView extends JFrame {
             showCharacterIncompleteErrorPopup();
             return;
         }
+        currentCharacter = character;
 
         characterBio = "";
         generateBioButton.setEnabled(false);
@@ -313,41 +315,53 @@ public class MainView extends JFrame {
     }
 
     private void getCharacterPicture() {
+        FantasyCharacter character;
+        try {
+            character = buildCharacter();
+        } catch (Exception e) {
+            showCharacterIncompleteErrorPopup();
+            return;
+        }
+        if (!character.isValid()) {
+            showCharacterIncompleteErrorPopup();
+            return;
+        }
+        currentCharacter = character;
+
         SDAPIConfig sdapiConfig = appConfig.getSdApiConfig();
         String url = sdapiConfig.getFullUrl();
 
         String basePrompt = "character portrait, dark fantasy, CHAR_DESCRIPTION_PROMPT natural lighting, high detail, 8K";
 
-        FantasyCharacter theCharacter = buildCharacter();
 
         // SEX RACE CLASS, STRENGTH EFFECT, CONSTITUTION EFFECT, CHARISMA EFFECT, ALIGNMENT,
         StringBuilder characterDescription = new StringBuilder();
         // SEX RACE CLASS,
-        characterDescription.append(theCharacter.getSex().toLowerCase()).append(" ");
-        characterDescription.append(theCharacter.getRace().toLowerCase()).append(" ");
-        characterDescription.append(theCharacter.getCharacterClass().toLowerCase()).append(", ");
+        characterDescription.append(character.getSex().toLowerCase()).append(" ");
+        characterDescription.append(character.getRace().toLowerCase()).append(" ");
+        characterDescription.append(character.getCharacterClass().toLowerCase()).append(", ");
         // STRENGTH EFFECT,
-        if (theCharacter.getStrength() >= 17) {
+        if (character.getStrength() >= 17) {
             characterDescription.append("muscular body, ");
-        } else if (theCharacter.getStrength() <= 12) {
+        } else if (character.getStrength() <= 12) {
             characterDescription.append("slim body, ");
         }
         // CONSTITUTION EFFECT,
-        if (theCharacter.getConstitution() >= 13) {
+        if (character.getConstitution() >= 13) {
             characterDescription.append("healthy, ");
         } else {
             characterDescription.append("sickly, ");
         }
         // CHARISMA EFFECT,
-        if (theCharacter.getCharisma() >= 17) {
+        if (character.getCharisma() >= 17) {
             characterDescription.append("smiling confidently, ");
-        } else if (theCharacter.getCharisma() >= 15) {
+        } else if (character.getCharisma() >= 15) {
             characterDescription.append("smiling, ");
-        } else if (theCharacter.getCharisma() <= 12) {
+        } else if (character.getCharisma() <= 12) {
             characterDescription.append("annoyed face, ");
         }
         // ALIGNMENT,
-        characterDescription.append(theCharacter.getAlignment().toLowerCase()).append(",");
+        characterDescription.append(character.getAlignment().toLowerCase()).append(",");
 
         SDPromptDTO prompt = new SDPromptDTO();
         prompt.setPrompt(basePrompt.replace("CHAR_DESCRIPTION_PROMPT", characterDescription.toString()));
@@ -395,13 +409,16 @@ public class MainView extends JFrame {
     }
 
     private void saveCharacter() {
+        if (!currentCharacter.isValid()) {
+            showCharacterIncompleteErrorPopup();
+            return;
+        }
         String rootFolder = "characters";
-        FantasyCharacter theCharacter = buildCharacter();
-        String characterFolder = LocalDate.now().toString() + "_" + theCharacter.getName();
-        String pictureFileName = "pic_" + theCharacter.getName().replace(" ", "-") + "_" + LocalDateTime.now().toString() + ".jpg";
-        String bioFileName = "bio_" + theCharacter.getName().replace(" ", "-") + "_" + LocalDateTime.now().toString();
+        String characterFolder = LocalDate.now().toString() + "_" + currentCharacter.getName();
+        String pictureFileName = "pic_" + currentCharacter.getName().replace(" ", "-") + "_" + LocalDateTime.now().toString() + ".jpg";
+        String bioFileName = "bio_" + currentCharacter.getName().replace(" ", "-") + "_" + LocalDateTime.now().toString();
 
-        String bioContent = theCharacter.getTextualDescription() + "\n\n\nBio: " + characterBio;
+        String bioContent = currentCharacter.getTextualDescription() + "\n\n\nBio: " + characterBio;
 
         String finalFolderPath = rootFolder + "/" + characterFolder;
 
@@ -432,6 +449,7 @@ public class MainView extends JFrame {
     }
 
     private void clearAll() {
+        currentCharacter = new FantasyCharacter();
         characterPicture = new byte[]{};
         characterBio = "";
 
