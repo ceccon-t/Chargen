@@ -140,4 +140,30 @@ public class FantasyCharacter {
 
         return sb.toString();
     }
+
+    public boolean isValid() {
+        if (name == null || name.trim().isEmpty()) return false;
+
+        if (race == null || race.trim().isEmpty()) return false;
+
+        if (sex == null || sex.trim().isEmpty()) return false;
+
+        if (characterClass == null || characterClass.trim().isEmpty()) return false;
+
+        if (alignment == null || alignment.trim().isEmpty()) return false;
+
+        if (strength == null) return false;
+
+        if (dexterity == null) return false;
+
+        if (constitution == null) return false;
+
+        if (intelligence == null) return false;
+
+        if (wisdom == null) return false;
+
+        if (charisma == null) return false;
+
+        return true;
+    }
 }
