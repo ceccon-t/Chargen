@@ -19,7 +19,7 @@ If you like the result, click on the "Save character" button at the bottom to sa
 
 ## Dependencies
 
-The application assumes you have an OpenAI-compatible LLM server listening on port 8080 of your computer and a Stable Diffusion image generation model server listening on port 7860. If you have experience configuring and running them, feel free to use your favorite ones - if you do not have experience, the easiest way to get the LLM part running is to use [llamafile](https://github.com/mozilla-Ocho/llamafile), while for the Stable Diffusion model the classic solution is [text-generation-webui](https://github.com/oobabooga/text-generation-webui). Both of these will already start the servers listening on the expected ports by default.
+The application assumes you have an OpenAI-compatible LLM server listening on port 8080 of your computer and a Stable Diffusion image generation model server listening on port 7860 (both ports can be configured through command line options, check section below). If you have experience configuring and running them, feel free to use your favorite ones - if you do not have experience, the easiest way to get the LLM part running is to use [llamafile](https://github.com/mozilla-Ocho/llamafile), while for the Stable Diffusion model the classic solution is [text-generation-webui](https://github.com/oobabooga/text-generation-webui). Both of these will already start the servers listening on the expected ports by default.
 
 Don't like the results you have been getting? Just try different models!
 
