@@ -5,9 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - YYYY-MM-DD
-
-### Added
+## [1.2.0] - 2024-12-24
 
 ### Changed
 
@@ -17,14 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Block generating biography if character infos have not been entirely filled
 - Block generating avatar if character infos have not been entirely filled
 - Block saving character if not generated neither biography nor avatar yet
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 
 
 ## [1.1.0] - 2024-12-06
