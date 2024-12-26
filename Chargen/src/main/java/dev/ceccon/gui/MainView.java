@@ -115,7 +115,7 @@ public class MainView extends JFrame {
 
         stateInfo = new JLabel("Enter your character info and press Submit.");
 
-        JButton clearButton = new JButton("Clear");
+        JButton clearButton = new JButton("Clear all");
         clearButton.addActionListener(e -> {
             clearAll();
         });
@@ -196,7 +196,8 @@ public class MainView extends JFrame {
         infosPanel.add(pnCharisma);
 //        infosPanel.add(spBio);
 //        infosPanel.add(stateInfo);
-        infosPanel.add(clearButton);
+//        infosPanel.add(clearButton);
+        infosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
 
         ImageIcon icon = new ImageIcon("image.jpg");
         Image image = icon.getImage();
@@ -218,7 +219,8 @@ public class MainView extends JFrame {
 
 
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+//        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 20));
         topPanel.add(infosPanel);
         topPanel.add(picturePanel);
 
@@ -236,7 +238,11 @@ public class MainView extends JFrame {
         });
 
         add(mainPanel, BorderLayout.NORTH);
-        add(saveCharacterButton, BorderLayout.SOUTH);
+        JPanel controlsPanel = new JPanel();
+        controlsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 15));
+        controlsPanel.add(saveCharacterButton);
+        controlsPanel.add(clearButton);
+        add(controlsPanel, BorderLayout.SOUTH);
     }
 
     private FantasyCharacter buildCharacter() {
