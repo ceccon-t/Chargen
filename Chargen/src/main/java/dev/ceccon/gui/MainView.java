@@ -8,6 +8,7 @@ import dev.ceccon.client.dtos.SDPromptDTO;
 import dev.ceccon.client.dtos.SDResponseDTO;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,7 +75,7 @@ public class MainView extends JFrame {
         this.appConfig = appConfig;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(960, 960);
+        setSize(1000, 960);
         setLayout(new BorderLayout());
 
         session = new GUISession(appConfig);
@@ -200,6 +201,7 @@ public class MainView extends JFrame {
 //        infosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
 
         JPanel infosPanel = new JPanel(new GridBagLayout());
+        infosPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -292,7 +294,9 @@ public class MainView extends JFrame {
         gbc.anchor = GridBagConstraints.LINE_END;
         infosPanel.add(tfCharisma, gbc);
 
-        infosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
+        JPanel wrapperInfosPanel = new JPanel();
+        wrapperInfosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
+        wrapperInfosPanel.add(infosPanel);
 
 
 
@@ -320,7 +324,7 @@ public class MainView extends JFrame {
         JPanel topPanel = new JPanel();
 //        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 20));
-        topPanel.add(infosPanel);
+        topPanel.add(wrapperInfosPanel);
         topPanel.add(picturePanel);
 
         JPanel mainPanel = new JPanel();
