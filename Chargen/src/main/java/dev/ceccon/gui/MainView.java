@@ -181,23 +181,122 @@ public class MainView extends JFrame {
         pnCharisma.add(tfCharisma);
 
 
-        JPanel infosPanel = new JPanel();
-        infosPanel.setLayout(new BoxLayout(infosPanel, BoxLayout.Y_AXIS));
-        infosPanel.add(pnName);
-        infosPanel.add(pnRace);
-        infosPanel.add(pnSex);
-        infosPanel.add(pnClass);
-        infosPanel.add(pnAlignment);
-        infosPanel.add(pnStrength);
-        infosPanel.add(pnDexterity);
-        infosPanel.add(pnConstitution);
-        infosPanel.add(pnIntelligence);
-        infosPanel.add(pnWisdom);
-        infosPanel.add(pnCharisma);
-//        infosPanel.add(spBio);
-//        infosPanel.add(stateInfo);
-//        infosPanel.add(clearButton);
+//        JPanel infosPanel = new JPanel();
+//        infosPanel.setLayout(new BoxLayout(infosPanel, BoxLayout.Y_AXIS));
+//        infosPanel.add(pnName);
+//        infosPanel.add(pnRace);
+//        infosPanel.add(pnSex);
+//        infosPanel.add(pnClass);
+//        infosPanel.add(pnAlignment);
+//        infosPanel.add(pnStrength);
+//        infosPanel.add(pnDexterity);
+//        infosPanel.add(pnConstitution);
+//        infosPanel.add(pnIntelligence);
+//        infosPanel.add(pnWisdom);
+//        infosPanel.add(pnCharisma);
+////        infosPanel.add(spBio);
+////        infosPanel.add(stateInfo);
+////        infosPanel.add(clearButton);
+//        infosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
+
+        JPanel infosPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lName, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfName, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lRace, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfRace, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lSex, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfSex, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lClass, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfClass, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lAlignment, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfAlignment, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lStrength, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfStrength, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lDexterity, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfDexterity, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lConstitution, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfConstitution, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lIntelligence, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfIntelligence, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lWisdom, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfWisdom, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        infosPanel.add(lCharisma, gbc);
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        infosPanel.add(tfCharisma, gbc);
+
         infosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
+
+
+
+        // END GRIDBAGLAYOUT STUFF
 
         ImageIcon icon = new ImageIcon("image.jpg");
         Image image = icon.getImage();
