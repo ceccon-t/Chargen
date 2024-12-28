@@ -380,6 +380,13 @@ public class MainView extends JFrame {
         return theCharacter;
     }
 
+    private void showCharacterIncompleteErrorPopup() {
+        JOptionPane.showMessageDialog(null,
+                "Please fill all character infos.",
+                "INCOMPLETE CHARACTER",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     public void getCharBio() throws IOException {
         FantasyCharacter character;
         try {
@@ -403,13 +410,6 @@ public class MainView extends JFrame {
                 this::appendTokenToBio,
                 (end) -> wrapUpBioGeneration()
         );
-    }
-
-    private void showCharacterIncompleteErrorPopup() {
-        JOptionPane.showMessageDialog(null,
-                "Please fill all character infos.",
-                "INCOMPLETE CHARACTER",
-                JOptionPane.ERROR_MESSAGE);
     }
 
     private void appendTokenToBio(String token) {
@@ -505,16 +505,6 @@ public class MainView extends JFrame {
             generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_ENABLED);
             generateImageButton.setEnabled(true);
         }).start();
-    }
-
-    private void saveGeneratedImage(String outputFileName, byte[] imageData) {
-        try(FileOutputStream fos = new FileOutputStream("pictures/" + outputFileName)) {
-            fos.write(imageData);
-            System.out.println("Image saved.");
-        } catch (IOException e) {
-            System.out.println("Error when SAVING image");
-            throw new RuntimeException(e);
-        }
     }
 
     private void saveCharacter() {
