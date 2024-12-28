@@ -1,7 +1,6 @@
 package dev.ceccon.gui;
 
 import dev.ceccon.character.FantasyCharacter;
-import dev.ceccon.client.SDClient;
 import dev.ceccon.config.AppConfig;
 import dev.ceccon.config.SDAPIConfig;
 import dev.ceccon.client.dtos.SDPromptDTO;
@@ -490,10 +489,8 @@ public class MainView extends JFrame {
         generateImageButton.setEnabled(false);
 
         new Thread(() -> {
-            SDResponseDTO response = null;
             try {
-                response = SDClient.sendPrompt(url, prompt);
-                byte[] imageData = Base64.getDecoder().decode(response.getImages().get(0));
+                byte[] imageData = session.createAvatar(url, prompt);
                 characterPicture = imageData;
 
                 imageLabel.setIcon(new ImageIcon(imageData));

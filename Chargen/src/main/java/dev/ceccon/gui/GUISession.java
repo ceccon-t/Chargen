@@ -3,21 +3,27 @@ package dev.ceccon.gui;
 import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.client.LLMClient;
 import dev.ceccon.client.LLMSanitizer;
+import dev.ceccon.client.SDClient;
+import dev.ceccon.client.dtos.SDPromptDTO;
+import dev.ceccon.client.dtos.SDResponseDTO;
 import dev.ceccon.config.AppConfig;
 import dev.ceccon.conversation.Chat;
 import dev.ceccon.conversation.Message;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.function.Consumer;
 
 public class GUISession {
 
     private AppConfig appConfig;
     private LLMClient llmClient;
+    private SDClient sdClient;
 
     public GUISession(AppConfig appConfig) {
         this.appConfig = appConfig;
         this.llmClient = new LLMClient(appConfig.getLlmApiConfig());
+        this.sdClient = new SDClient(appConfig.getSdApiConfig());
     }
 
     public String createBio(FantasyCharacter userCharacter, Consumer<String> tokenConsumer, Consumer<Void> onFinish) throws IOException {
@@ -42,7 +48,6 @@ public class GUISession {
         return LLMSanitizer.sanitizeLLMSpecialTokens(response.content());
     }
 
-
     private String textDescription(FantasyCharacter c) {
         StringBuilder sb = new StringBuilder();
 
@@ -61,6 +66,12 @@ public class GUISession {
         sb.append("Charisma: "); sb.append(c.getCharisma()); sb.append("\n");
 
         return sb.toString();
+    }
+
+    public byte[] createAvatar(String url, SDPromptDTO promptDTO) throws IOException {
+        SDResponseDTO response = sdClient.getAvatar(promptDTO);
+        byte[] imageData = Base64.getDecoder().decode(response.getImages().get(0));
+        return imageData;
     }
 
 }
