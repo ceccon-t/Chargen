@@ -103,9 +103,11 @@ public class GUISession {
         }
         // ALIGNMENT,
         characterDescription.append(character.getAlignment().toLowerCase()).append(",");
+        String finalPrompt = basePrompt.replace("CHAR_DESCRIPTION_PROMPT", characterDescription.toString());
+        finalPrompt = LLMSanitizer.sanitizeForChat(finalPrompt);
 
         SDPromptDTO prompt = new SDPromptDTO();
-        prompt.setPrompt(basePrompt.replace("CHAR_DESCRIPTION_PROMPT", characterDescription.toString()));
+        prompt.setPrompt(finalPrompt);
         prompt.setNegative_prompt(negativePrompt);
         prompt.setSeed(-1L);
         prompt.setSteps(20);
