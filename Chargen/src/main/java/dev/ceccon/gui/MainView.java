@@ -2,9 +2,6 @@ package dev.ceccon.gui;
 
 import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.config.AppConfig;
-import dev.ceccon.config.SDAPIConfig;
-import dev.ceccon.client.dtos.SDPromptDTO;
-import dev.ceccon.client.dtos.SDResponseDTO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,7 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
 public class MainView extends JFrame {
@@ -26,8 +22,6 @@ public class MainView extends JFrame {
     private static final String TEXT_BUTTON_GENERATION_BIO_DISABLED = "Please wait...";
     public static final String TEXT_BUTTON_GENERATION_IMAGE_ENABLED = "Generate image";
     public static final String TEXT_BUTTON_GENERATION_IMAGE_DISABLED = "Please wait...";
-
-    private AppConfig appConfig;
 
     private JLabel lName;
     private JTextField tfName;
@@ -70,8 +64,6 @@ public class MainView extends JFrame {
 
     public MainView(AppConfig appConfig) {
         super("CHARGEN");
-
-        this.appConfig = appConfig;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 960);
@@ -310,7 +302,6 @@ public class MainView extends JFrame {
 
         generateImageButton = new JButton("Generate image");
         generateImageButton.addActionListener(e -> {
-            System.out.println("Generating image...");
             getCharacterPicture();
         });
 
@@ -436,61 +427,12 @@ public class MainView extends JFrame {
         }
         currentCharacter = character;
 
-        SDAPIConfig sdapiConfig = appConfig.getSdApiConfig();
-        String url = sdapiConfig.getFullUrl();
-
-        String basePrompt = "character portrait, dark fantasy, CHAR_DESCRIPTION_PROMPT natural lighting, high detail, 8K";
-
-
-        // SEX RACE CLASS, STRENGTH EFFECT, CONSTITUTION EFFECT, CHARISMA EFFECT, ALIGNMENT,
-        StringBuilder characterDescription = new StringBuilder();
-        // SEX RACE CLASS,
-        characterDescription.append(character.getSex().toLowerCase()).append(" ");
-        characterDescription.append(character.getRace().toLowerCase()).append(" ");
-        characterDescription.append(character.getCharacterClass().toLowerCase()).append(", ");
-        // STRENGTH EFFECT,
-        if (character.getStrength() >= 17) {
-            characterDescription.append("muscular body, ");
-        } else if (character.getStrength() <= 12) {
-            characterDescription.append("slim body, ");
-        }
-        // CONSTITUTION EFFECT,
-        if (character.getConstitution() >= 13) {
-            characterDescription.append("healthy, ");
-        } else {
-            characterDescription.append("sickly, ");
-        }
-        // CHARISMA EFFECT,
-        if (character.getCharisma() >= 17) {
-            characterDescription.append("smiling confidently, ");
-        } else if (character.getCharisma() >= 15) {
-            characterDescription.append("smiling, ");
-        } else if (character.getCharisma() <= 12) {
-            characterDescription.append("annoyed face, ");
-        }
-        // ALIGNMENT,
-        characterDescription.append(character.getAlignment().toLowerCase()).append(",");
-
-        SDPromptDTO prompt = new SDPromptDTO();
-        prompt.setPrompt(basePrompt.replace("CHAR_DESCRIPTION_PROMPT", characterDescription.toString()));
-        prompt.setNegative_prompt("NSFW, (worst quality,low quality:1.4), glassy eyes, logo, text, monochrome, Deformity, Twisted limbs, Incorrect proportions, Ugliness, Ugly limbs, Deformed arm, Deformed fingers, Three hands, Deformed hand, 4 fingers, 6 fingers, Deformed thigh, Twisted thigh, Three legs, Short neck, Curved spine, Muscle atrophy, Bony, Facial asymmetry, Incoordinated body, Double chin, Long chin, Elongated physique, Emaciated");
-        prompt.setSeed(-1L);
-        prompt.setSteps(20);
-        prompt.setWidth(512);
-        prompt.setHeight(512);
-        prompt.setCfg_scale(7);
-        prompt.setSampler_name("Euler a");
-        prompt.setN_iter(1);
-        prompt.setBatch_size(1);
-
-        System.out.println("Prompt: " + prompt.getPrompt());
-
         generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_DISABLED);
         generateImageButton.setEnabled(false);
 
         new Thread(() -> {
             try {
-                byte[] imageData = session.createAvatar(url, prompt);
+                byte[] imageData = session.createAvatar(character);
                 characterPicture = imageData;
 
                 imageLabel.setIcon(new ImageIcon(imageData));
