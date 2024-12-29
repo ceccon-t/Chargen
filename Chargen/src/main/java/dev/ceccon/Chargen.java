@@ -7,6 +7,7 @@ import dev.ceccon.config.AppConfig;
 import dev.ceccon.config.LLMAPIConfig;
 import dev.ceccon.config.SDAPIConfig;
 import dev.ceccon.gui.MainView;
+import dev.ceccon.storage.LocalFileStorage;
 
 import javax.swing.*;
 
@@ -15,10 +16,12 @@ public class Chargen {
         AppConfig appConfig = new AppConfig();
         parseArguments(args, appConfig);
 
+        LocalFileStorage storage = new LocalFileStorage();
+
         printBanner();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new MainView(appConfig);
+                new MainView(appConfig, storage);
             }
         });
     }

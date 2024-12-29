@@ -2,18 +2,14 @@ package dev.ceccon.gui;
 
 import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.config.AppConfig;
+import dev.ceccon.storage.LocalFileStorage;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.concurrent.CompletableFuture;
 
 public class MainView extends JFrame {
@@ -59,15 +55,17 @@ public class MainView extends JFrame {
     String characterBio = "";
 
     private GUISession session;
+    private LocalFileStorage storage;
 
-    public MainView(AppConfig appConfig) {
+    public MainView(AppConfig appConfig, LocalFileStorage storage) {
         super("CHARGEN");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 960);
         setLayout(new BorderLayout());
 
-        session = new GUISession(appConfig);
+        this.session = new GUISession(appConfig);
+        this.storage = storage;
 
         buildView();
 
@@ -420,39 +418,7 @@ public class MainView extends JFrame {
             showCharacterIncompleteErrorPopup();
             return;
         }
-        String rootFolder = "characters";
-        String characterFolder = LocalDate.now().toString() + "_" + currentCharacter.getName();
-        String pictureFileName = "pic_" + currentCharacter.getName().replace(" ", "-") + "_" + LocalDateTime.now().toString() + ".jpg";
-        String bioFileName = "bio_" + currentCharacter.getName().replace(" ", "-") + "_" + LocalDateTime.now().toString();
-
-        String bioContent = currentCharacter.getTextualDescription() + "\n\n\nBio: " + characterBio;
-
-        String finalFolderPath = rootFolder + "/" + characterFolder;
-
-        File folder = new File(finalFolderPath);
-        if (!folder.exists()) {
-            boolean createdFolders = folder.mkdirs();
-            if (!createdFolders) {
-                System.out.println("Could not created folder: " + folder.toString());
-                return;
-            }
-        }
-
-        File bioFile = new File(folder, bioFileName);
-        try (FileWriter writer = new FileWriter(bioFile)) {
-            writer.write(bioContent);
-            System.out.println("Saved character bio: " + bioFile.getPath());
-        } catch (IOException e) {
-            System.out.println("Could not write bio file: " + bioFile.getPath());
-        }
-
-        File pictureFile = new File(folder, pictureFileName);
-        try (FileOutputStream fos = new FileOutputStream(pictureFile)) {
-            fos.write(characterPicture);
-            System.out.println("Saved character picture: " + pictureFile.getPath());
-        } catch (IOException e) {
-            System.out.println("Could not write picture file: " + pictureFile.getPath());
-        }
+        storage.saveCharacter(currentCharacter, characterBio, characterPicture);
     }
 
     private void clearAll() {
