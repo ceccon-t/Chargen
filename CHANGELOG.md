@@ -13,12 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Grouped character infos form on main view
 - Moved clear button to bottom of main view
+- Refactored a lot of logic away from view class
+- Added class to handle persistence
+- Standardized terminology to use "avatar" instead of "image"
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- Prevent bug when using accented letters for fields that are passed to Stable Diffusion model
 
 ### Security
 
