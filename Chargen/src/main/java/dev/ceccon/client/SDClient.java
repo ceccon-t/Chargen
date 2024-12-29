@@ -21,12 +21,12 @@ public class SDClient {
 
         String body = mapper.writeValueAsString(promptDTO);
 
-        LLMConnection apiConnection = LLMConnection.forUrl(apiConfig.getFullUrl());
-        apiConnection.send(body);
+        AIServerConnection serverConnection = AIServerConnection.forUrl(apiConfig.getFullUrl());
+        serverConnection.send(body);
 
         String rawResponse = "";
 
-        try (BufferedReader in = apiConnection.getBufferedReader()) {
+        try (BufferedReader in = serverConnection.getBufferedReader()) {
             String inputLine;
             StringBuilder response = new StringBuilder();
             while((inputLine = in.readLine()) != null) {
@@ -35,7 +35,7 @@ public class SDClient {
             rawResponse = response.toString();
         }
 
-        apiConnection.close();
+        serverConnection.close();
 
         return mapper.readValue(rawResponse, SDResponseDTO.class);
     }

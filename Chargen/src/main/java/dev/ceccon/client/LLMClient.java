@@ -26,12 +26,12 @@ public class LLMClient {
         promptDTO.setStream(true);
         String body = mapper.writeValueAsString(promptDTO);
 
-        LLMConnection llmConnection = LLMConnection.forUrl(apiConfig.getFullUrl());
-        llmConnection.send(body);
+        AIServerConnection serverConnection = AIServerConnection.forUrl(apiConfig.getFullUrl());
+        serverConnection.send(body);
 
         String rawResponse = "";
 
-        try (BufferedReader in = llmConnection.getBufferedReader()) {
+        try (BufferedReader in = serverConnection.getBufferedReader()) {
             String inputLine;
             StringBuilder responseBuilder = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
@@ -47,7 +47,7 @@ public class LLMClient {
             rawResponse = responseBuilder.toString();
         }
 
-        llmConnection.close();
+        serverConnection.close();
         onFinish.accept(null);
 
         return new Message("assistant", rawResponse);

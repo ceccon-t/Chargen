@@ -7,11 +7,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class LLMConnection {
+public class AIServerConnection {
 
     HttpURLConnection connection;
 
-    private LLMConnection(String urlString) throws IOException {
+    private AIServerConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
 
         HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
@@ -23,8 +23,8 @@ public class LLMConnection {
         this.connection = httpConnection;
     }
 
-    public static LLMConnection forUrl(String urlString) throws IOException {
-        return new LLMConnection(urlString);
+    public static AIServerConnection forUrl(String urlString) throws IOException {
+        return new AIServerConnection(urlString);
     }
 
     public void send(String body) throws IOException {
