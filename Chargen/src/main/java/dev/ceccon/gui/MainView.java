@@ -16,8 +16,8 @@ public class MainView extends JFrame {
 
     private static final String TEXT_BUTTON_GENERATION_BIO_ENABLED = "Generate bio";
     private static final String TEXT_BUTTON_GENERATION_BIO_DISABLED = "Please wait...";
-    public static final String TEXT_BUTTON_GENERATION_IMAGE_ENABLED = "Generate avatar";
-    public static final String TEXT_BUTTON_GENERATION_IMAGE_DISABLED = "Please wait...";
+    public static final String TEXT_BUTTON_GENERATION_AVATAR_ENABLED = "Generate avatar";
+    public static final String TEXT_BUTTON_GENERATION_AVATAR_DISABLED = "Please wait...";
 
     private JLabel lName;
     private JTextField tfName;
@@ -44,14 +44,14 @@ public class MainView extends JFrame {
     private JTextField tfCharisma;
 
     private ImageIcon scaledIcon;
-    private JLabel imageLabel;
-    private JButton generateImageButton;
+    private JLabel avatarLabel;
+    private JButton generateAvatarButton;
     private JButton generateBioButton;
 
     private JTextArea taBio;
 
     FantasyCharacter currentCharacter = new FantasyCharacter();
-    byte[] characterPicture = {};
+    byte[] characterAvatar = {};
     String characterBio = "";
 
     private GUISession session;
@@ -269,17 +269,17 @@ public class MainView extends JFrame {
         Image scaledImage = image.getScaledInstance(512, 512, Image.SCALE_SMOOTH);
         scaledIcon = new ImageIcon(scaledImage);
 
-        imageLabel = new JLabel(scaledIcon, JLabel.CENTER);
+        avatarLabel = new JLabel(scaledIcon, JLabel.CENTER);
 
-        generateImageButton = new JButton("Generate image");
-        generateImageButton.addActionListener(e -> {
-            getCharacterPicture();
+        generateAvatarButton = new JButton(TEXT_BUTTON_GENERATION_AVATAR_ENABLED);
+        generateAvatarButton.addActionListener(e -> {
+            getCharacterAvatar();
         });
 
         JPanel picturePanel = new JPanel();
         picturePanel.setLayout(new BorderLayout());
-        picturePanel.add(imageLabel, BorderLayout.CENTER);
-        picturePanel.add(generateImageButton, BorderLayout.SOUTH);
+        picturePanel.add(avatarLabel, BorderLayout.CENTER);
+        picturePanel.add(generateAvatarButton, BorderLayout.SOUTH);
 
 
         JPanel topPanel = new JPanel();
@@ -380,7 +380,7 @@ public class MainView extends JFrame {
         generateBioButton.setText(TEXT_BUTTON_GENERATION_BIO_ENABLED);
     }
 
-    private void getCharacterPicture() {
+    private void getCharacterAvatar() {
         FantasyCharacter character;
         try {
             character = buildCharacter();
@@ -394,22 +394,22 @@ public class MainView extends JFrame {
         }
         currentCharacter = character;
 
-        generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_DISABLED);
-        generateImageButton.setEnabled(false);
+        generateAvatarButton.setText(TEXT_BUTTON_GENERATION_AVATAR_DISABLED);
+        generateAvatarButton.setEnabled(false);
 
         new Thread(() -> {
             try {
                 byte[] imageData = session.createAvatar(character);
-                characterPicture = imageData;
+                characterAvatar = imageData;
 
-                imageLabel.setIcon(new ImageIcon(imageData));
+                avatarLabel.setIcon(new ImageIcon(imageData));
 
             } catch (IOException e) {
-                System.out.println("Error when GENERATING image");
+                System.out.println("Error when GENERATING avatar");
             }
 
-            generateImageButton.setText(TEXT_BUTTON_GENERATION_IMAGE_ENABLED);
-            generateImageButton.setEnabled(true);
+            generateAvatarButton.setText(TEXT_BUTTON_GENERATION_AVATAR_ENABLED);
+            generateAvatarButton.setEnabled(true);
         }).start();
     }
 
@@ -418,12 +418,12 @@ public class MainView extends JFrame {
             showCharacterIncompleteErrorPopup();
             return;
         }
-        storage.saveCharacter(currentCharacter, characterBio, characterPicture);
+        storage.saveCharacter(currentCharacter, characterBio, characterAvatar);
     }
 
     private void clearAll() {
         currentCharacter = new FantasyCharacter();
-        characterPicture = new byte[]{};
+        characterAvatar = new byte[]{};
         characterBio = "";
 
         tfName.setText("");
@@ -440,7 +440,7 @@ public class MainView extends JFrame {
 
         taBio.setText("");
 
-        imageLabel.setIcon(scaledIcon);
+        avatarLabel.setIcon(scaledIcon);
         revalidate();
         repaint();
     }
