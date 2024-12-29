@@ -15,24 +15,6 @@ public class FantasyCharacter {
     private Integer wisdom;
     private Integer charisma;
 
-    public FantasyCharacter() {
-
-    }
-
-    public FantasyCharacter(String name, String race, String sex, String characterClass, String alignment, Integer strength, Integer dexterity, Integer constitution, Integer intelligence, Integer wisdom, Integer charisma) {
-        this.name = name;
-        this.race = race;
-        this.sex = sex;
-        this.characterClass = characterClass;
-        this.alignment = alignment;
-        this.strength = strength;
-        this.dexterity = dexterity;
-        this.constitution = constitution;
-        this.intelligence = intelligence;
-        this.wisdom = wisdom;
-        this.charisma = charisma;
-    }
-
     public String getName() {
         return name;
     }

@@ -20,7 +20,7 @@ public class MainView extends JFrame {
 
     private static final String TEXT_BUTTON_GENERATION_BIO_ENABLED = "Generate bio";
     private static final String TEXT_BUTTON_GENERATION_BIO_DISABLED = "Please wait...";
-    public static final String TEXT_BUTTON_GENERATION_IMAGE_ENABLED = "Generate image";
+    public static final String TEXT_BUTTON_GENERATION_IMAGE_ENABLED = "Generate avatar";
     public static final String TEXT_BUTTON_GENERATION_IMAGE_DISABLED = "Please wait...";
 
     private JLabel lName;
@@ -53,8 +53,6 @@ public class MainView extends JFrame {
     private JButton generateBioButton;
 
     private JTextArea taBio;
-
-    private JLabel stateInfo;
 
     FantasyCharacter currentCharacter = new FantasyCharacter();
     byte[] characterPicture = {};
@@ -105,8 +103,6 @@ public class MainView extends JFrame {
         taBio.setWrapStyleWord(true);
         JScrollPane spBio = new JScrollPane(taBio);
 
-        stateInfo = new JLabel("Enter your character info and press Submit.");
-
         JButton clearButton = new JButton("Clear all");
         clearButton.addActionListener(e -> {
             clearAll();
@@ -115,8 +111,6 @@ public class MainView extends JFrame {
         generateBioButton = new JButton(TEXT_BUTTON_GENERATION_BIO_ENABLED);
         generateBioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String characterName = tfName.getText();
-                stateInfo.setText("Creating bio for character " + characterName + ", please wait...");
                 CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                     try {
                         getCharBio();
@@ -172,25 +166,7 @@ public class MainView extends JFrame {
         pnCharisma.add(lCharisma);
         pnCharisma.add(tfCharisma);
 
-
-//        JPanel infosPanel = new JPanel();
-//        infosPanel.setLayout(new BoxLayout(infosPanel, BoxLayout.Y_AXIS));
-//        infosPanel.add(pnName);
-//        infosPanel.add(pnRace);
-//        infosPanel.add(pnSex);
-//        infosPanel.add(pnClass);
-//        infosPanel.add(pnAlignment);
-//        infosPanel.add(pnStrength);
-//        infosPanel.add(pnDexterity);
-//        infosPanel.add(pnConstitution);
-//        infosPanel.add(pnIntelligence);
-//        infosPanel.add(pnWisdom);
-//        infosPanel.add(pnCharisma);
-////        infosPanel.add(spBio);
-////        infosPanel.add(stateInfo);
-////        infosPanel.add(clearButton);
-//        infosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
-
+        // START INFOS PANEL
         JPanel infosPanel = new JPanel(new GridBagLayout());
         infosPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -288,10 +264,7 @@ public class MainView extends JFrame {
         JPanel wrapperInfosPanel = new JPanel();
         wrapperInfosPanel.setBorder(BorderFactory.createTitledBorder("Character infos"));
         wrapperInfosPanel.add(infosPanel);
-
-
-
-        // END GRIDBAGLAYOUT STUFF
+        // END INFOS PANEL
 
         ImageIcon icon = new ImageIcon("image.jpg");
         Image image = icon.getImage();
@@ -312,7 +285,6 @@ public class MainView extends JFrame {
 
 
         JPanel topPanel = new JPanel();
-//        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 20));
         topPanel.add(wrapperInfosPanel);
         topPanel.add(picturePanel);
@@ -322,7 +294,6 @@ public class MainView extends JFrame {
         mainPanel.add(topPanel);
         mainPanel.add(spBio);
         mainPanel.add(generateBioButton);
-        //mainPanel.add(stateInfo);
 
         JButton saveCharacterButton = new JButton("Save character");
         saveCharacterButton.addActionListener(e -> {
@@ -340,7 +311,6 @@ public class MainView extends JFrame {
 
     private FantasyCharacter buildCharacter() {
         String characterName = tfName.getText();
-//        stateInfo.setText("Creating bio for character " + characterName + ", please wait...");
 
         String race = tfRace.getText();
         String sex = tfSex.getText();
@@ -410,7 +380,6 @@ public class MainView extends JFrame {
     private void wrapUpBioGeneration() {
         generateBioButton.setEnabled(true);
         generateBioButton.setText(TEXT_BUTTON_GENERATION_BIO_ENABLED);
-        stateInfo.setText("Done!");
     }
 
     private void getCharacterPicture() {
