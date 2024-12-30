@@ -16,13 +16,13 @@ The main folder of the project is named `Chargen`, and it is present at the root
 
 ### Code overview
 
-The main class of the application is also the only one at the root package, `Chargen`.
+The main class of the application is at the root package, `Chargen`.
 
 The big picture view is that there are four main responsibilities in the project: allowing users to enter information about a character, generating an avatar image for this character, generating a textual biography for this character and handling the persistance of avatar and biography to disk.
 
 The classes that interact with the APIs of the text generation model and of the image generation model are separated, with the prefix "LLM" for the first and "SD" for the second. The application is designed to work with any LLM that offers an OpenAI-compatible API and the Stable Diffusion family of image generation models (hence the "SD").
 
-The code was initally written with a lot of the responsibilities, most poignantly the preparation of the prompt for the image generation model, inside the MainView UI class. The plan is to iteratively fix this by refactoring the code to a better design.
+The logic that builds the prompts for the models, both for text generation and image generation, can be found in class `GUISession`.
 
 ## CI/CD
 
@@ -43,5 +43,5 @@ The script that defines the main workflow can be found under `.github/workflows/
 
 [Swing](https://docs.oracle.com/javase/tutorial/uiswing/) as the GUI framework.
 
-[Github Actions](https://docs.github.com/en/actions/learn-github-actions) for continuous integration.
+[Github Actions](https://docs.github.com/en/actions/learn-github-actions) for continuous integration and continuous delivery.
 

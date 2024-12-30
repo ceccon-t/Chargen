@@ -10,7 +10,7 @@ Desktop application to generate character avatars and biographies.
 
 ## How to use
 
-Type in the information about your character on the top left form. After that, click on "Generate image" button to generate an avatar, and "Generate bio" to generate a biography.
+Type in the information about your character on the top left form. After that, click on "Generate avatar" button to generate an avatar, and "Generate bio" to generate a biography.
 
 If you like the result, click on the "Save character" button at the bottom to save the generated content to disk. A folder will be created with the date and name of the character, containing a JPEG image for the avatar and a plain text file for the biography with all the information of the character.
 
@@ -20,6 +20,8 @@ If you like the result, click on the "Save character" button at the bottom to sa
 ## Dependencies
 
 The application assumes you have an OpenAI-compatible LLM server listening on port 8080 of your computer and a Stable Diffusion image generation model server listening on port 7860 (both ports can be configured through command line options, check section below). If you have experience configuring and running them, feel free to use your favorite ones - if you do not have experience, the easiest way to get the LLM part running is to use [llamafile](https://github.com/mozilla-Ocho/llamafile), while for the Stable Diffusion model the classic solution is [text-generation-webui](https://github.com/oobabooga/text-generation-webui). Both of these will already start the servers listening on the expected ports by default.
+
+The application has been developed using as reference models Llama 3.1 8B for text generation, and Stable Diffusion 1.5 for image generation.
 
 Don't like the results you have been getting? Just try different models!
 
