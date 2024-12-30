@@ -6,7 +6,7 @@
 
 Desktop application to generate character avatars and biographies.
 
-![Avatar and biography filled for Human Male Warrior character Gilew Aegold](https://raw.githubusercontent.com/ceccon-t/Chargen/main/images/Chargen_v1-0-0_sc0.png "Avatar and biography filled for Human Male Warrior character Gilew Aegold")
+![Avatar and biography filled for Human Male Warrior character Gilew Aegold](https://raw.githubusercontent.com/ceccon-t/Chargen/main/images/Chargen_v1-3-0_sc0.png "Avatar and biography filled for Human Male Warrior character Gilew Aegold")
 
 ## How to use
 
@@ -14,7 +14,7 @@ Type in the information about your character on the top left form. After that, c
 
 If you like the result, click on the "Save character" button at the bottom to save the generated content to disk. A folder will be created with the date and name of the character, containing a JPEG image for the avatar and a plain text file for the biography with all the information of the character.
 
-![Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye](https://raw.githubusercontent.com/ceccon-t/Chargen/main/images/Chargen_v1-0-0_sc1.png "Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye")
+![Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye](https://raw.githubusercontent.com/ceccon-t/Chargen/main/images/Chargen_v1-3-0_sc1.png "Avatar and biography filled for Elf Female Sorcerer character Finduilye Nimrielye")
 
 
 ## Dependencies
