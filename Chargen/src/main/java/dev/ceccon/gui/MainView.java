@@ -4,12 +4,14 @@ import dev.ceccon.character.FantasyCharacter;
 import dev.ceccon.config.AppConfig;
 import dev.ceccon.storage.LocalFileStorage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
 public class MainView extends JFrame {
@@ -264,8 +266,14 @@ public class MainView extends JFrame {
         wrapperInfosPanel.add(infosPanel);
         // END INFOS PANEL
 
-        ImageIcon icon = new ImageIcon("image.jpg");
-        Image image = icon.getImage();
+        Image image;
+        try {
+            InputStream imageStream = getClass().getClassLoader().getResourceAsStream("image.jpg");
+            image = ImageIO.read(imageStream);
+        } catch (IOException e) {
+            System.out.println("Error while trying to load initial image...");
+            throw new RuntimeException(e);
+        }
         Image scaledImage = image.getScaledInstance(512, 512, Image.SCALE_SMOOTH);
         scaledIcon = new ImageIcon(scaledImage);
 
